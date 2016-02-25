@@ -147,8 +147,8 @@ public class Chess extends Puzzle<Panel> {
 	}
 
 	/**
-	 * Method to call for pieces that move oblique directions.
-	 * 
+	 * Method to call for pieces that move oblique directions. 
+	 *  
 	 * @param r
 	 * @param c
 	 * @param loc1
@@ -194,7 +194,7 @@ public class Chess extends Puzzle<Panel> {
 	}
 
 	/**
-	 * Method to call for Knight, King to move.
+	 * Method to call for Knight, Knight, Pawn to move according the argument passed in.
 	 * 
 	 * @param r
 	 * @param c
@@ -204,7 +204,7 @@ public class Chess extends Puzzle<Panel> {
 	 * @param config
 	 * @param moveSteps
 	 */
-	private void setMoveK(int r, int c, int loc1, int loc2, String piece,
+	private void setMoveKNP(int r, int c, int loc1, int loc2, String piece,
 			Panel config, ArrayList<Panel> moveSteps) {
 		if (!(config.board.get(r - loc1).get(c - loc2).equals("."))) {
 			Panel current = config.getClone();
@@ -217,6 +217,12 @@ public class Chess extends Puzzle<Panel> {
 	/**
 	 * Method that getting the neighbors of the each possible movement of pieces
 	 * and called by the solver.
+	 * Q moves => Queen
+	 * K moves => King
+	 * N moves => Knight
+	 * B moves => Bishop
+	 * R moves => Rook
+	 * P moves => Pawn
 	 * 
 	 * @param config
 	 * @return neighbors
@@ -243,66 +249,65 @@ public class Chess extends Puzzle<Panel> {
 					break;
 				case "K":
 					if (!(i - 1 <= -1)) {
-						setMoveK(i, j, 1, 0, "K", config, moveSteps);
+						setMoveKNP(i, j, 1, 0, "K", config, moveSteps);
 
 						if (!(j - 1 <= -1)) {
-							setMoveK(i, j, 1, 1, "K", config, moveSteps);
+							setMoveKNP(i, j, 1, 1, "K", config, moveSteps);
 						}
 
 						if (!(j + 1 >= COLUMNS)) {
-							setMoveK(i, j, 1, -1, "K", config, moveSteps);
+							setMoveKNP(i, j, 1, -1, "K", config, moveSteps);
 						}
 					}
-
 					if (!(i + 1 >= ROWS)) {
-						setMoveK(i, j, -1, 0, "K", config, moveSteps);
+						setMoveKNP(i, j, -1, 0, "K", config, moveSteps);
 						if (!(j - 1 <= -1)) {
-							setMoveK(i, j, -1, 1, "K", config, moveSteps);
+							setMoveKNP(i, j, -1, 1, "K", config, moveSteps);
 						}
 						if (!(j + 1 >= COLUMNS)) {
-							setMoveK(i, j, -1, -1, "K", config, moveSteps);
+							setMoveKNP(i, j, -1, -1, "K", config, moveSteps);
 						}
 					}
 					if (!(j - 1 <= -1)) {
-						setMoveK(i, j, 0, 1, "K", config, moveSteps);
+						setMoveKNP(i, j, 0, 1, "K", config, moveSteps);
 					}
 					if (!(j + 1 >= COLUMNS)) {
-						setMoveK(i, j, 0, -1, "K", config, moveSteps);
+						setMoveKNP(i, j, 0, -1, "K", config, moveSteps);
 					}
 					neighbors.addAll(moveSteps);
 					break;
 				case "N":
 					if (!(i - 2 <= -1)) {
 						if (!(j - 1 <= -1)) {
-							setMoveK(i, j, 2, 1, "N", config, moveSteps);
+							setMoveKNP(i, j, 2, 1, "N", config, moveSteps);
 						}
 						if (!(j + 1 >= COLUMNS)) {
-							setMoveK(i, j, 2, -1, "N", config, moveSteps);
+							setMoveKNP(i, j, 2, -1, "N", config, moveSteps);
 						}
 					}
 					if (!(i + 2 >= ROWS)) {
 						if (!(j - 1 <= -1)) {
-							setMoveK(i, j, -2, 1, "N", config, moveSteps);
+							setMoveKNP(i, j, -2, 1, "N", config, moveSteps);
 						}
 						if (!(j + 1 >= COLUMNS)) {
-							setMoveK(i, j, -2, -1, "N", config, moveSteps);
+							setMoveKNP(i, j, -2, -1, "N", config, moveSteps);
 						}
 					}
 
 					if (!(j + 2 >= COLUMNS)) {
 						if (!(i - 1 <= -1)) {
-							setMoveK(i, j, 1, -2, "N", config, moveSteps);
+							setMoveKNP(i, j, 1, -2, "N", config, moveSteps);
 						}
 						if (!(i + 1 >= ROWS)) {
-							setMoveK(i, j, -1, -2, "N", config, moveSteps);
+							setMoveKNP(i, j, -1, -2, "N", config, moveSteps);
 						}
 					}
 					if (!(j - 2 <= -1)) {
 						if (!(i - 1 <= -1)) {
-							setMoveK(i, j, 1, 2, "N", config, moveSteps);
+							setMoveKNP(i, j, 1, 2, "N", config, moveSteps);
 						}
 						if (!(i + 1 >= ROWS)) {
-							setMoveK(i, j, -1, 2, "N", config, moveSteps);
+							setMoveKNP(i, j, -1, 2, "N", config, moveSteps);
 						}
 					}
 					neighbors.addAll(moveSteps);
@@ -326,10 +331,10 @@ public class Chess extends Puzzle<Panel> {
 				case "P":
 					if (!(i - 1 <= -1)) {
 						if (!(j - 1 <= -1)) {
-							setMoveK(i, j, 1, 1, "P", config, moveSteps);
+							setMoveKNP(i, j, 1, 1, "P", config, moveSteps);
 						}
 						if (!(j >= COLUMNS - 1)) {
-							setMoveK(i, j, 1, -1, "P", config, moveSteps);
+							setMoveKNP(i, j, 1, -1, "P", config, moveSteps);
 						}
 					}
 					neighbors.addAll(moveSteps);
